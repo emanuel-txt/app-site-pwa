@@ -3,90 +3,113 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<title>Provedor Conecta - Internet para Sua Casa</title>
+	<title>Provedor Local — Internet Residencial</title>
 	<link rel="manifest" href="/manifest.json" />
-	<link rel="stylesheet" href="styles.css" />
-	<meta name="theme-color" content="#0b6efd" />
+	<link rel="stylesheet" href="/styles.css" />
+	<meta name="theme-color" content="#0057b7" />
 </head>
 <body>
 	<header class="site-header">
 		<div class="container">
-			<h1>Conecta</h1>
+			<h1 class="logo">Provedor Local</h1>
 			<nav>
-				<a href="#planos">Planos</a>
-				<a href="#contato">Contato</a>
+				<ul class="nav-list">
+					<li><a href="#planos">Planos</a></li>
+					<li><a href="#comparar">Comparar</a></li>
+					<li><a href="#faq">FAQ</a></li>
+					<li><a href="#contato">Contato</a></li>
+				</ul>
 			</nav>
+			<button id="btn-instalar" class="btn small">Instalar PWA</button>
 		</div>
 	</header>
 
 	<main>
 		<section class="hero">
-			<div class="container hero-grid">
-				<div>
-					<h2>Internet rápida e estável para sua casa</h2>
-					<p>Planos sob medida com instalação rápida e suporte 24/7. Escolha o seu e navegue sem limites.</p>
-					<a href="#planos" class="btn primary">Ver Planos</a>
-				</div>
-				<div class="hero-illustration">
-					<!-- ...existing code... -->
-					<img src="icons/hero-illu.svg" alt="Ilustração conexão" />
-				</div>
+			<div class="container">
+				<h2>Internet rápida e confiável para sua casa</h2>
+				<p>Planos a partir de velocidade de 50 Mbps. Atendimento local e suporte 24/7.</p>
+				<a href="#planos" class="btn">Ver Planos</a>
 			</div>
 		</section>
 
-		<section id="planos" class="container planos">
+		<section id="planos" class="container section">
 			<h3>Nossos Planos</h3>
-			<div class="grid">
-				<article class="card">
-					<h4>Essencial</h4>
-					<p class="price">50 Mbps</p>
-					<ul>
-						<li>Instalação básica</li>
-						<li>Suporte 24/7</li>
-						<li>Sem fidelidade</li>
-					</ul>
-					<button class="btn outline">Contratar</button>
-				</article>
-
-				<article class="card recommended">
-					<span class="badge">Mais vendido</span>
-					<h4>Avançado</h4>
-					<p class="price">150 Mbps</p>
-					<ul>
-						<li>Roteador incluso</li>
-						<li>Suporte técnico prioritário</li>
-						<li>Desconto no 1º mês</li>
-					</ul>
-					<button class="btn primary">Contratar</button>
-				</article>
-
-				<article class="card">
-					<h4>Ultra</h4>
-					<p class="price">300 Mbps</p>
-					<ul>
-						<li>Para streaming e jogos</li>
-						<li>Suporte dedicado</li>
-						<li>Instalação premium</li>
-					</ul>
-					<button class="btn outline">Contratar</button>
-				</article>
+			<div id="planos-grid" class="plans-grid">
+				<!-- Cards serão renderizados por app.js -->
 			</div>
 		</section>
 
-		<section id="contato" class="container contato">
-			<h3>Fale conosco</h3>
-			<p>Telefone: (00) 0000-0000 • Email: vendas@conecta.ex</p>
+		<section id="comparar" class="container section">
+			<h3>Comparar Planos</h3>
+			<table class="compare-table" aria-describedby="comparar">
+				<thead>
+					<tr>
+						<th>Recurso</th>
+						<th>Bronze</th>
+						<th>Prata</th>
+						<th>Ouro</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>Velocidade</td><td>50 Mbps</td><td>150 Mbps</td><td>500 Mbps</td></tr>
+					<tr><td>Instalação</td><td>R$ 99</td><td>Grátis</td><td>Grátis + Roteador</td></tr>
+					<tr><td>Suporte</td><td>24/7</td><td>24/7</td><td>24/7 Prioritário</td></tr>
+					<tr><td>Limite de franquia</td><td>Ilimitado</td><td>Ilimitado</td><td>Ilimitado</td></tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section id="faq" class="container section">
+			<h3>Perguntas Frequentes</h3>
+			<details><summary>Como contratar?</summary><p>Clique em "Contratar" no plano desejado e preencha o formulário.</p></details>
+			<details><summary>Qual o prazo de instalação?</summary><p>Geralmente 3 a 7 dias úteis após confirmação.</p></details>
+		</section>
+
+		<section id="contato" class="container section">
+			<h3>Fale Conosco</h3>
+			<form id="contact-form" class="contact-form">
+				<label>Nome <input name="nome" required /></label>
+				<label>Email <input type="email" name="email" required /></label>
+				<label>Mensagem <textarea name="mensagem" rows="4" required></textarea></label>
+				<button type="submit" class="btn">Enviar</button>
+			</form>
 		</section>
 	</main>
 
+	<!-- botão de instalar no final do site (visível apenas quando disponível) -->
+	<div class="container" style="text-align:center;margin:1rem 0;">
+		<button id="btn-instalar-bottom" class="btn install-button">Instalar App</button>
+	</div>
+
 	<footer class="site-footer">
 		<div class="container">
-			<p>&copy; <span id="ano"></span> Conecta - Todos os direitos reservados</p>
+			<p>© <span id="ano"></span> Provedor Local — Todos os direitos reservados</p>
 		</div>
 	</footer>
 
-	<button id="installBtn" class="install-btn" aria-hidden="true">Instalar app</button>
+	<!-- Modal de contratação -->
+	<div id="modal" class="modal" aria-hidden="true">
+		<div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+			<button id="modal-close" class="modal-close" aria-label="Fechar">&times;</button>
+			<h4 id="modal-title">Contratar Plano</h4>
+			<form id="signup-form" class="signup-form">
+				<label>Plano <input name="plano" id="plano-input" readonly /></label>
+				<label>Nome <input name="nome" required /></label>
+				<label>Telefone <input name="telefone" /></label>
+				<label>Endereço <input name="endereco" required /></label>
+				<label>Email <input type="email" name="email" required /></label>
+				<div class="modal-actions">
+					<button type="submit" class="btn">Enviar Solicitação</button>
+					<button type="button" id="modal-cancel" class="btn ghost">Cancelar</button>
+				</div>
+			</form>
+			<div id="signup-success" class="hidden">
+				<p>Solicitação enviada! Verifique seu e-mail (ou veja em "Minhas solicitações").</p>
+			</div>
+		</div>
+	</div>
 
-	<script src="app.js" defer></script>
+	<script src="/app.js" defer></script>
 </body>
 </html>

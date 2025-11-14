@@ -1,0 +1,25 @@
+{
+  "plans": [
+    {
+      "id": "bronze",
+      "name": "Bronze",
+      "speed": "50 Mbps",
+      "price": "R$ 89,90/mês",
+      "features": ["Instalação rápida", "Suporte 24/7", "Sem limite de franquia"]
+    },
+    {
+      "id": "prata",
+      "name": "Prata",
+      "speed": "150 Mbps",
+      "price": "R$ 129,90/mês",
+      "features": ["Roteador grátis", "Suporte 24/7", "Prioridade média"]
+    },
+    {
+      "id": "ouro",
+      "name": "Ouro",
+      "speed": "500 Mbps",
+      "price": "R$ 199,90/mês",
+      "features": ["Roteador premium", "Suporte prioritário", "SLA dedicada"]
+    }
+  ]
+}
