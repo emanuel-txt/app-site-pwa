@@ -1,3 +1,21 @@
+// captura global do evento antes de qualquer DOMContentLoaded para não perder o evento
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('[PWA] beforeinstallprompt capturado');
+  e.preventDefault();
+  deferredPrompt = e;
+  // torna visíveis os botões via classe CSS
+  document.body.classList.add('show-install');
+  document.querySelectorAll('.install-button').forEach(b => b.setAttribute('aria-hidden','false'));
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('[PWA] appinstalled');
+  deferredPrompt = null;
+  document.body.classList.remove('show-install');
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const planosGrid = document.getElementById('planos-grid');
   const anoSpan = document.getElementById('ano');
@@ -12,6 +30,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnInstalarBottom = document.getElementById('btn-instalar-bottom');
 
   anoSpan.textContent = new Date().getFullYear();
+
+  // checagem rápida do manifest e ícones para diagnóstico
+  async function checkManifestAssets() {
+    try {
+      const res = await fetch('/manifest.json', {cache: 'no-store'});
+      if (!res.ok) {
+        console.warn('[PWA] manifest.json não disponível (status ' + res.status + ')');
+        return;
+      }
+      const manifest = await res.json();
+      if (!manifest.icons || manifest.icons.length === 0) {
+        console.warn('[PWA] manifest.json não contém icons. Isso pode impedir o prompt de instalação.');
+      } else {
+        // verifica os ícones referenciados
+        await Promise.all(manifest.icons.map(async icon => {
+          try {
+            const r = await fetch(icon.src, {method: 'HEAD'});
+            if (!r.ok) console.warn(`[PWA] ícone ${icon.src} retornou ${r.status}`);
+          } catch (err) {
+            console.warn(`[PWA] falha ao buscar ícone ${icon.src}:`, err);
+          }
+        }));
+      }
+    } catch (err) {
+      console.warn('[PWA] erro ao buscar manifest.json:', err);
+    }
+  }
+  checkManifestAssets();
 
   // Carrega planos
   fetch('/plans.json').then(r => r.json()).then(data => {
@@ -91,27 +137,21 @@ document.addEventListener('DOMContentLoaded', () => {
     navigator.serviceWorker.register('/sw.js').catch(()=>{/*fail silently*/});
   }
 
-  // Handle PWA install prompt
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    // mostra ambos os botões quando disponível
-    if (btnInstalar) btnInstalar.style.display = 'inline-block';
-    if (btnInstalarBottom) btnInstalarBottom.style.display = 'inline-block';
-  });
-
+  // Função reutilizável que usa a variável global deferredPrompt
   async function promptInstall() {
     if (!deferredPrompt) {
-      alert('A opção de instalar não está disponível no momento.');
+      console.warn('[PWA] deferredPrompt é null — verifique manifest/icons, HTTPS ou localhost');
+      alert('Instalação indisponível no momento. Verifique se está em localhost ou HTTPS e se o navegador suporta PWA.');
       return;
     }
     deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
+    const choice = await deferredPrompt.userChoice;
+    console.log('[PWA] userChoice:', choice);
     deferredPrompt = null;
-    if (btnInstalar) btnInstalar.style.display = 'none';
-    if (btnInstalarBottom) btnInstalarBottom.style.display = 'none';
+    document.body.classList.remove('show-install');
+    document.querySelectorAll('.install-button').forEach(b => b.setAttribute('aria-hidden','true'));
   }
+
   if (btnInstalar) btnInstalar.addEventListener('click', promptInstall);
   if (btnInstalarBottom) btnInstalarBottom.addEventListener('click', promptInstall);
 });
