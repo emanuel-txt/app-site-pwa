@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Provedor Conecta - Internet para Sua Casa</title>
+	<link rel="manifest" href="/manifest.json" />
+	<link rel="stylesheet" href="styles.css" />
+	<meta name="theme-color" content="#0b6efd" />
+</head>
+<body>
+	<header class="site-header">
+		<div class="container">
+			<h1>Conecta</h1>
+			<nav>
+				<a href="#planos">Planos</a>
+				<a href="#contato">Contato</a>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<section class="hero">
+			<div class="container hero-grid">
+				<div>
+					<h2>Internet rápida e estável para sua casa</h2>
+					<p>Planos sob medida com instalação rápida e suporte 24/7. Escolha o seu e navegue sem limites.</p>
+					<a href="#planos" class="btn primary">Ver Planos</a>
+				</div>
+				<div class="hero-illustration">
+					<!-- ...existing code... -->
+					<img src="icons/hero-illu.svg" alt="Ilustração conexão" />
+				</div>
+			</div>
+		</section>
+
+		<section id="planos" class="container planos">
+			<h3>Nossos Planos</h3>
+			<div class="grid">
+				<article class="card">
+					<h4>Essencial</h4>
+					<p class="price">50 Mbps</p>
+					<ul>
+						<li>Instalação básica</li>
+						<li>Suporte 24/7</li>
+						<li>Sem fidelidade</li>
+					</ul>
+					<button class="btn outline">Contratar</button>
+				</article>
+
+				<article class="card recommended">
+					<span class="badge">Mais vendido</span>
+					<h4>Avançado</h4>
+					<p class="price">150 Mbps</p>
+					<ul>
+						<li>Roteador incluso</li>
+						<li>Suporte técnico prioritário</li>
+						<li>Desconto no 1º mês</li>
+					</ul>
+					<button class="btn primary">Contratar</button>
+				</article>
+
+				<article class="card">
+					<h4>Ultra</h4>
+					<p class="price">300 Mbps</p>
+					<ul>
+						<li>Para streaming e jogos</li>
+						<li>Suporte dedicado</li>
+						<li>Instalação premium</li>
+					</ul>
+					<button class="btn outline">Contratar</button>
+				</article>
+			</div>
+		</section>
+
+		<section id="contato" class="container contato">
+			<h3>Fale conosco</h3>
+			<p>Telefone: (00) 0000-0000 • Email: vendas@conecta.ex</p>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<p>&copy; <span id="ano"></span> Conecta - Todos os direitos reservados</p>
+		</div>
+	</footer>
+
+	<button id="installBtn" class="install-btn" aria-hidden="true">Instalar app</button>
+
+	<script src="app.js" defer></script>
+</body>
+</html>
